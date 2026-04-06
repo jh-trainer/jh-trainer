@@ -921,6 +921,165 @@
   .stagger-3 { transition-delay: 0.3s; }
   .stagger-4 { transition-delay: 0.4s; }
   .stagger-5 { transition-delay: 0.5s; }
+
+  /* ===== PT PROGRAM SECTION ===== */
+  .pt-program-section {
+    padding: 80px 24px;
+    position: relative;
+  }
+
+  .pt-tab-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: var(--card);
+    border-radius: 8px;
+    padding: 4px;
+    margin-bottom: 24px;
+  }
+
+  .pt-tab-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--font-body);
+    padding: 10px 4px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    letter-spacing: 0.3px;
+  }
+
+  .pt-tab-btn.active {
+    background: var(--accent);
+    color: #0a0a0f;
+  }
+
+  .pt-tab-panel { display: none; }
+  .pt-tab-panel.active { display: block; }
+
+  .pt-time-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .pt-time-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .pt-time-label { font-size: 13px; color: var(--muted); width: 72px; flex-shrink: 0; }
+  .pt-time-value { font-size: 14px; color: #f0f0f0; font-weight: 700; }
+
+  .pt-time-badge {
+    margin-left: auto;
+    font-size: 10px;
+    background: rgba(200,240,0,0.12);
+    color: var(--accent);
+    border: 1px solid rgba(200,240,0,0.25);
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .pt-time-note {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 6px;
+    border-left: 2px solid rgba(200,240,0,0.3);
+  }
+
+  .pt-price-group-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .pt-price-card {
+    background: var(--card);
+    border: 1px solid rgba(200,240,0,0.12);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+  }
+
+  .pt-price-card.featured {
+    border-color: rgba(200,240,0,0.45);
+    background: rgba(200,240,0,0.04);
+  }
+
+  .pt-price-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .pt-price-name { font-size: 14px; font-weight: 700; color: #f0f0f0; }
+
+  .pt-price-badge-rec {
+    font-size: 10px;
+    background: var(--accent);
+    color: #0a0a0f;
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+  }
+
+  .pt-price-amount { font-size: 22px; font-weight: 900; color: var(--accent); margin-bottom: 6px; }
+  .pt-price-amount span { font-size: 13px; color: var(--muted); font-weight: 400; }
+  .pt-price-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .pt-price-note {
+    font-size: 12px;
+    color: #666;
+    margin-top: 14px;
+    line-height: 1.7;
+  }
+
+  .pt-curr-item {
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .pt-curr-num {
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--accent);
+    width: 44px;
+    flex-shrink: 0;
+    padding-top: 2px;
+    letter-spacing: 0.5px;
+  }
+
+  .pt-curr-title { font-size: 14px; color: #f0f0f0; font-weight: 700; margin-bottom: 4px; }
+  .pt-curr-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .pt-curr-note {
+    margin-top: 16px;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.7;
+    text-align: center;
+  }
 </style>
 </head>
 <body>
@@ -1073,6 +1232,116 @@
 	<div class="review-card">
       <img src="images/pt_review6.jpg" alt="PT 후기 6">
     </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PT PROGRAM -->
+<section class="pt-program-section">
+  <p class="section-label reveal">PT Program</p>
+  <h2 class="section-title reveal">프로그램 <em>안내</em></h2>
+
+  <div class="pt-tab-bar reveal">
+    <button class="pt-tab-btn active" onclick="switchPtTab(0)">운동 시간</button>
+    <button class="pt-tab-btn" onclick="switchPtTab(1)">가격</button>
+    <button class="pt-tab-btn" onclick="switchPtTab(2)">커리큘럼</button>
+  </div>
+
+  <!-- 탭 1: 시간 -->
+  <div class="pt-tab-panel active" id="pt-tab-0">
+    <div class="pt-time-row">
+      <div class="pt-time-dot"></div>
+      <span class="pt-time-label">평일</span>
+      <span class="pt-time-value">오전 6:00 – 15:00</span>
+      <span class="pt-time-badge">운영 중</span>
+    </div>
+    <div class="pt-time-row" style="border-bottom:none">
+      <div class="pt-time-dot" style="background:rgba(255,255,255,0.15)"></div>
+      <span class="pt-time-label">주말/공휴일</span>
+      <span class="pt-time-value" style="color:var(--muted)">휴무</span>
+    </div>
+    <div class="pt-time-note">
+      PT 예약은 최소 하루 전 카카오톡으로 문의해 주세요.<br>시간 조율 가능합니다.
+    </div>
+  </div>
+
+  <!-- 탭 2: 가격 -->
+  <div class="pt-tab-panel" id="pt-tab-1">
+    <div class="pt-price-group-label">1 : 1 PT</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px;">횟수 자율 선택 가능</p>
+    <div class="pt-price-card">
+      <div class="pt-price-card-top">
+        <span class="pt-price-name">25분</span>
+      </div>
+      <div class="pt-price-amount">2만원 <span>/ 회</span></div>
+      <div class="pt-price-desc">짧고 집중적으로, 바쁜 일상 속 효율적인 운동</div>
+    </div>
+    <div class="pt-price-card featured">
+      <div class="pt-price-card-top">
+        <span class="pt-price-name">50분</span>
+        <span class="pt-price-badge-rec">추천</span>
+      </div>
+      <div class="pt-price-amount">4만원 <span>/ 회</span></div>
+      <div class="pt-price-desc">충분한 시간으로 체계적인 운동 · 자세 교정까지</div>
+    </div>
+
+    <div class="pt-price-group-label" style="margin-top:24px">1 : 2 PT</div>
+    <div class="pt-price-card">
+      <div class="pt-price-card-top">
+        <span class="pt-price-name">10회 패키지</span>
+      </div>
+      <div class="pt-price-amount">50만원 <span>/ 10회</span></div>
+      <div class="pt-price-desc">파트너와 함께 부담 없이 — 1인당 25만원</div>
+    </div>
+    <div class="pt-price-note">* 정확한 일정 조율은 카카오톡 또는 센터 방문 문의</div>
+  </div>
+
+  <!-- 탭 3: 커리큘럼 -->
+  <div class="pt-tab-panel" id="pt-tab-2">
+    <div class="pt-curr-item">
+      <span class="pt-curr-num">1–5회</span>
+      <div>
+        <div class="pt-curr-title">운동 시작 &amp; 기초 기반 형성</div>
+        <div class="pt-curr-desc">체형·자세 분석, 기구 사용법, 올바른 호흡과 기초 동작 습득</div>
+      </div>
+    </div>
+    <div class="pt-curr-item">
+      <span class="pt-curr-num">6–10회</span>
+      <div>
+        <div class="pt-curr-title">헬스장 적응 &amp; 기초 확립</div>
+        <div class="pt-curr-desc">기초 근력 강화, 운동 패턴 정착, 부위별 자세 심화 교정</div>
+      </div>
+    </div>
+    <div class="pt-curr-item">
+      <span class="pt-curr-num">11–15회</span>
+      <div>
+        <div class="pt-curr-title">눈에 보이는 변화 시작</div>
+        <div class="pt-curr-desc">체지방 감소·근력 향상 체감, 운동 강도 점진적 상승</div>
+      </div>
+    </div>
+    <div class="pt-curr-item">
+      <span class="pt-curr-num">16–20회</span>
+      <div>
+        <div class="pt-curr-title">체형 변화 &amp; 운동 숙련 단계</div>
+        <div class="pt-curr-desc">체형 교정 효과 가시화, 복합 동작 수행 능력 향상</div>
+      </div>
+    </div>
+    <div class="pt-curr-item">
+      <span class="pt-curr-num">21–25회</span>
+      <div>
+        <div class="pt-curr-title">운동 능력 고도화 단계</div>
+        <div class="pt-curr-desc">고강도 트레이닝 도입, 퍼포먼스 향상 및 체력 극대화</div>
+      </div>
+    </div>
+    <div class="pt-curr-item" style="border-bottom:none">
+      <span class="pt-curr-num">26–30회</span>
+      <div>
+        <div class="pt-curr-title">완성 단계 &amp; 독립 운동</div>
+        <div class="pt-curr-desc">자립 운동 루틴 완성, 지속 가능한 습관 형성 및 마무리</div>
+      </div>
+    </div>
+    <div class="pt-curr-note">회원 목표에 따라 커리큘럼은 조정될 수 있습니다.</div>
   </div>
 </section>
 
@@ -1404,6 +1673,13 @@
   }, { threshold: 0.5 });
 
   if (recordValue) recordObserver.observe(recordValue);
+
+  // ===== PT Program Tab Switch =====
+  function switchPtTab(idx) {
+    document.querySelectorAll('.pt-tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    document.querySelectorAll('.pt-tab-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+  }
+
 </script>
 </body>
 </html>
