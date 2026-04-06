@@ -1240,10 +1240,9 @@
   <p class="section-label reveal">PT Program</p>
   <h2 class="section-title reveal">프로그램 <em>안내</em></h2>
 
-  <div class="pt-tab-bar reveal">
+  <div class="pt-tab-bar reveal" style="grid-template-columns:1fr 1fr;">
     <button class="pt-tab-btn active" onclick="switchPtTab(0)">운동 시간</button>
     <button class="pt-tab-btn" onclick="switchPtTab(1)">가격</button>
-    <button class="pt-tab-btn" onclick="switchPtTab(2)">커리큘럼</button>
   </div>
 
   <!-- 탭 1: 시간 -->
@@ -1295,52 +1294,7 @@
     <div class="pt-price-note">* 정확한 일정 조율은 카카오톡 또는 센터 방문 문의</div>
   </div>
 
-  <!-- 탭 3: 커리큘럼 -->
-  <div class="pt-tab-panel" id="pt-tab-2">
-    <div class="pt-curr-item">
-      <span class="pt-curr-num">1–5회</span>
-      <div>
-        <div class="pt-curr-title">운동 시작 &amp; 기초 기반 형성</div>
-        <div class="pt-curr-desc">체형·자세 분석, 기구 사용법, 올바른 호흡과 기초 동작 습득</div>
-      </div>
-    </div>
-    <div class="pt-curr-item">
-      <span class="pt-curr-num">6–10회</span>
-      <div>
-        <div class="pt-curr-title">헬스장 적응 &amp; 기초 확립</div>
-        <div class="pt-curr-desc">기초 근력 강화, 운동 패턴 정착, 부위별 자세 심화 교정</div>
-      </div>
-    </div>
-    <div class="pt-curr-item">
-      <span class="pt-curr-num">11–15회</span>
-      <div>
-        <div class="pt-curr-title">눈에 보이는 변화 시작</div>
-        <div class="pt-curr-desc">체지방 감소·근력 향상 체감, 운동 강도 점진적 상승</div>
-      </div>
-    </div>
-    <div class="pt-curr-item">
-      <span class="pt-curr-num">16–20회</span>
-      <div>
-        <div class="pt-curr-title">체형 변화 &amp; 운동 숙련 단계</div>
-        <div class="pt-curr-desc">체형 교정 효과 가시화, 복합 동작 수행 능력 향상</div>
-      </div>
-    </div>
-    <div class="pt-curr-item">
-      <span class="pt-curr-num">21–25회</span>
-      <div>
-        <div class="pt-curr-title">운동 능력 고도화 단계</div>
-        <div class="pt-curr-desc">고강도 트레이닝 도입, 퍼포먼스 향상 및 체력 극대화</div>
-      </div>
-    </div>
-    <div class="pt-curr-item" style="border-bottom:none">
-      <span class="pt-curr-num">26–30회</span>
-      <div>
-        <div class="pt-curr-title">완성 단계 &amp; 독립 운동</div>
-        <div class="pt-curr-desc">자립 운동 루틴 완성, 지속 가능한 습관 형성 및 마무리</div>
-      </div>
-    </div>
-    <div class="pt-curr-note">회원 목표에 따라 커리큘럼은 조정될 수 있습니다.</div>
-  </div>
+
 </section>
 
 <div class="section-divider"></div>
@@ -1586,10 +1540,16 @@
       <strong style="color:var(--text)">헬스장에서 뵙거나 편하게 문의 주세요.</strong>
     </p>
 
-    <a href="tel:031-233-8621" class="phone-btn">
-      <span>📞</span>
-      <span>커뮤니티센터</span>
-    </a>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <a href="https://open.kakao.com/o/pPSiLOoi" target="_blank" class="phone-btn" style="background:#FEE500;box-shadow:0 8px 40px rgba(254,229,0,0.3);">
+        <span style="font-size:16px;">💬</span>
+        <span style="color:#3A1D1D;">카톡 문의</span>
+      </a>
+      <a href="tel:031-233-8621" class="phone-btn">
+        <span>📞</span>
+        <span>커뮤니티센터</span>
+      </a>
+    </div>
   </div>
 </section>
 
