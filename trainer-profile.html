@@ -758,6 +758,66 @@
     box-shadow: 0 4px 20px rgba(200,240,0,0.25);
   }
 
+  .consult-form {
+    margin-top: 24px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .consult-form .tf-row { display: flex; flex-direction: column; gap: 6px; }
+  .consult-form label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .consult-form input,
+  .consult-form select,
+  .consult-form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: var(--bg2);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+  }
+  .consult-form textarea { min-height: 100px; resize: vertical; }
+  .consult-form-submit {
+    margin-top: 6px;
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #0a0a0f;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+  }
+  .consult-form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .consult-form-hint {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-top: -4px;
+  }
+  .consult-form-success {
+    margin-top: 16px;
+    padding: 18px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,240,200,0.35);
+    background: rgba(0,240,200,0.08);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.65;
+    text-align: left;
+  }
+
   /* ===== FOOTER ===== */
   .footer {
     padding: 32px 24px;
@@ -1547,6 +1607,39 @@
       <strong style="color:var(--text)">헬스장에서 뵙거나 편하게 문의 주세요.</strong>
     </p>
 
+    <form class="consult-form" id="consult-form" data-email="wjd7656@naver.com" autocomplete="on">
+      <div class="tf-row">
+        <label for="tc-name">이름</label>
+        <input type="text" id="tc-name" name="name" placeholder="홍길동" required>
+      </div>
+      <div class="tf-row">
+        <label for="tc-phone">연락처</label>
+        <input type="tel" id="tc-phone" name="phone" placeholder="010-0000-0000" required>
+      </div>
+      <div class="tf-row">
+        <label for="tc-interest">관심 분야</label>
+        <select id="tc-interest" name="interest">
+          <option value="">선택해주세요</option>
+          <option>무료 오티</option>
+          <option>체형 교정</option>
+          <option>다이어트</option>
+          <option>러닝·기록 향상</option>
+          <option>임산부 / 특수 상황</option>
+          <option>기타 (상담 시 말씀)</option>
+        </select>
+      </div>
+      <div class="tf-row">
+        <label for="tc-msg">문의 내용 (선택)</label>
+        <textarea id="tc-msg" name="message" placeholder="가능한 시간대, 운동 경험 등"></textarea>
+      </div>
+      <p class="consult-form-hint">아래 버튼은 메일로 접수됩니다. FormSubmit 최초 1회는 수신 메일에서 폼 활성화가 필요할 수 있습니다.</p>
+      <button type="submit" class="consult-form-submit" id="tc-submit-btn">무료 오티·상담 메일로 신청</button>
+    </form>
+    <div class="consult-form-success" id="consult-form-success" style="display:none;">
+      신청이 접수되었습니다 ✓<br>
+      <span style="font-size:12px;color:var(--muted);display:block;margin-top:8px;">영업일 기준 빠르면 당일 연락드립니다. 메일·문자 스팸함도 확인해 주세요.</span>
+    </div>
+
     <div style="display:flex;gap:10px;margin-top:8px;">
       <a href="https://open.kakao.com/o/pPSiLOoi" target="_blank" class="phone-btn" style="background:#FEE500;box-shadow:0 8px 40px rgba(254,229,0,0.3);">
         <span style="color:#3A1D1D;">카톡 문의</span>
@@ -1636,6 +1729,67 @@
   }, { threshold: 0.5 });
 
   if (recordValue) recordObserver.observe(recordValue);
+
+  // ===== FormSubmit (index.html과 동일: 표 이메일 템플릿) =====
+  function tcFormSubmitAlertMessage(raw) {
+    const s = (raw || '').toString();
+    if (/activation|activate form|needs activation|activate your form/i.test(s)) {
+      return 'FormSubmit에서 수신 메일함(스팸함 포함)으로 보낸 메일을 열고, "Activate Form" 링크를 한 번만 눌러 폼을 활성화해 주세요. 활성화 후에는 이 안내 없이 접수됩니다.';
+    }
+    if (s && s.length < 500) return s;
+    return '전송에 실패했습니다. 잠시 후 다시 시도하거나 카카오톡·전화로 문의해 주세요.';
+  }
+  const tcForm = document.getElementById('consult-form');
+  if (tcForm) {
+    tcForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const to = (tcForm.dataset.email || '').trim();
+      if (!to || !to.includes('@')) {
+        alert('접수 메일 설정에 문제가 있습니다. 카카오톡·전화로 문의해 주세요.');
+        return;
+      }
+      const n = document.getElementById('tc-name').value.trim();
+      const p = document.getElementById('tc-phone').value.trim();
+      if (!n || !p) {
+        alert('이름과 연락처를 입력해 주세요.');
+        return;
+      }
+      const interest = document.getElementById('tc-interest').value.trim() || '(미선택)';
+      const msg = document.getElementById('tc-msg').value.trim() || '(없음)';
+      const btn = document.getElementById('tc-submit-btn');
+      btn.disabled = true;
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(to), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            _subject: '[힐스테이트PT] 무료 오티·상담 신청',
+            _template: 'table',
+            이름: n,
+            연락처: p,
+            관심분야: interest,
+            문의내용: msg,
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          throw new Error((data && data.message) || res.statusText || 'fail');
+        }
+        const ok = data.success === true || data.success === 'true';
+        if (!ok) {
+          throw new Error((data && data.message) || '전송이 완료되지 않았습니다.');
+        }
+        tcForm.style.display = 'none';
+        document.getElementById('consult-form-success').style.display = 'block';
+      } catch (err) {
+        console.error(err);
+        const m = err && err.message ? String(err.message) : '';
+        alert(tcFormSubmitAlertMessage(m));
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  }
 
   // ===== PT Program Tab Switch =====
   function switchPtTab(idx) {
